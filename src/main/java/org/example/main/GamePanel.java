@@ -19,11 +19,17 @@ public class GamePanel extends JPanel implements Runnable {
 
     Thread gameThread;
 
+    Player player;
+
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     public void startGameThread() {
@@ -34,6 +40,24 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        int playerPreviousXValue = player.getX();
 
+        while (true) {
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+
+            if (player != null) {
+                if (player.getX() != playerPreviousXValue) {
+                    System.out.println("Moved");
+                }
+
+                playerPreviousXValue = player.getX();
+            }
+
+
+        }
     }
 }

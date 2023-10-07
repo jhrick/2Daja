@@ -17,6 +17,35 @@ public class Main {
         GamePanel gamePanel = new GamePanel();
         gamePanel.setFocusable(true);
 
+        gamePanel.startGameThread();
+
+        Player player = new Player();
+
+        gamePanel.setPlayer(player);
+
+        gamePanel.addKeyListener(new KeyListener() {
+            @Override
+            public void keyTyped(KeyEvent keyEvent) {
+
+            }
+
+            @Override
+            public void keyPressed(KeyEvent keyEvent) {
+                int keyCode = keyEvent.getKeyCode();
+
+                if (keyCode == KeyEvent.VK_LEFT) {
+                    player.moveToLeft();
+                } else if (keyCode == KeyEvent.VK_RIGHT) {
+                    player.moveToRight();
+                }
+            }
+
+            @Override
+            public void keyReleased(KeyEvent keyEvent) {
+
+            }
+        });
+
         window.add(gamePanel);
 
         window.pack();
