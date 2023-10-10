@@ -3,8 +3,6 @@ package org.example.main;
 import org.example.main.characters.Player;
 
 import javax.swing.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,28 +21,9 @@ public class Main {
 
         gamePanel.setPlayer(player);
 
-        gamePanel.addKeyListener(new KeyListener() {
-            @Override
-            public void keyTyped(KeyEvent keyEvent) {
+        HandlerEvent handlerEvent = new HandlerEvent(player);
 
-            }
-
-            @Override
-            public void keyPressed(KeyEvent keyEvent) {
-                int keyCode = keyEvent.getKeyCode();
-
-                if (keyCode == KeyEvent.VK_LEFT) {
-                    player.moveToLeft();
-                } else if (keyCode == KeyEvent.VK_RIGHT) {
-                    player.moveToRight();
-                }
-            }
-
-            @Override
-            public void keyReleased(KeyEvent keyEvent) {
-
-            }
-        });
+        gamePanel.addKeyListener(handlerEvent);
 
         window.add(gamePanel);
 
