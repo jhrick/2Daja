@@ -4,7 +4,7 @@ public class Player {
     private int x;
     private int y;
 
-    final private int tileSize = 48;
+    final private int speed = 3;
 
     public Player() {
         x = 0;
@@ -12,19 +12,19 @@ public class Player {
     }
 
     public void moveToLeft() {
-        x -= tileSize;
+        x -= speed;
     }
 
     public void moveToRight() {
-        x += tileSize;
+        x += speed;
     }
 
     public void moveUp() {
-        y += tileSize;
+        y += speed;
     }
 
     public void moveDown() {
-        y -= tileSize;
+        y -= speed;
     }
 
     public int getX() {
