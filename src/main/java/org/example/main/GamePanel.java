@@ -7,7 +7,7 @@ import java.awt.*;
 
 public class GamePanel extends JPanel implements Runnable {
 
-    //screen settings
+    // screen settings
     final int originalTileSize = 16; // 16x16 tile
     final int scale = 3;
 
@@ -40,24 +40,50 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
+        final int framesPerSecond = 60; // 60FPS
+        final int skipTricks = 1000 / framesPerSecond; // 1000 = one second
+
+        double nextGameTick = System.currentTimeMillis();
+
+        int sleepTime;
+
         int playerPreviousXValue = player.getX();
+        int playerPreviousYValue = player.getY();
 
-        while (true) {
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+        while (gameThread != null) {
+            update();
+            paintContent();
+
+            nextGameTick += skipTricks;
+            sleepTime = (int) (nextGameTick - System.currentTimeMillis());
+
+            if (sleepTime >= 0) {
+                try {
+                    Thread.sleep(sleepTime);
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                // Shit, we are running behind
             }
-
             if (player != null) {
-                if (player.getX() != playerPreviousXValue) {
+                if (player.getX() != playerPreviousXValue || player.getY() != playerPreviousYValue) {
                     System.out.println("Moved");
                 }
 
                 playerPreviousXValue = player.getX();
+                playerPreviousYValue = player.getY();
             }
 
 
         }
+    }
+
+    public void update() {
+
+    }
+
+    public void paintContent() {
+
     }
 }
