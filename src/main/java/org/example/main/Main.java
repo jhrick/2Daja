@@ -1,6 +1,6 @@
 package org.example.main;
 
-import org.example.main.characters.Player;
+import org.example.main.entity.Player;
 
 import javax.swing.*;
 

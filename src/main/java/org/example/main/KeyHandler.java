@@ -1,7 +1,5 @@
 package org.example.main;
 
-import org.example.main.characters.Player;
-
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 

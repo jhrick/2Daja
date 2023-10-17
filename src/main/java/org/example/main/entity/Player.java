@@ -1,4 +1,4 @@
-package org.example.main.characters;
+package org.example.main.entity;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
