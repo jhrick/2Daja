@@ -17,15 +17,25 @@ public class GamePanel extends JPanel implements Runnable {
     final int screenWidth = maxScreenCol * tileSize; // 768px
     final int screenHeight = maxScreenRows * tileSize; // 576px
 
+    // FPS
+    final int FPS = 60;
+
     Thread gameThread;
 
+    KeyHandler keyH = new KeyHandler();
+
     Player player;
+
+    public int playerX = 100;
+    public int playerY = 100;
 
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
         this.setBackground(Color.black);
         this.setDoubleBuffered(true);
+        this.addKeyListener(keyH);
+        this.setFocusable(true);
     }
 
     public void setPlayer(Player player) {
@@ -40,50 +50,45 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        final int framesPerSecond = 60; // 60FPS
-        final int skipTricks = 1000 / framesPerSecond; // 1000 = one second
-
-        double nextGameTick = System.currentTimeMillis();
-
-        int sleepTime;
-
-        int playerPreviousXValue = player.getX();
-        int playerPreviousYValue = player.getY();
+        double drawInterval = (double) 1000000000 /FPS;
+        double delta = 0;
+        long lastTime = System.nanoTime();
+        long currentTime;
 
         while (gameThread != null) {
-            update();
-            paintContent();
+            currentTime = System.nanoTime();
 
-            nextGameTick += skipTricks;
-            sleepTime = (int) (nextGameTick - System.currentTimeMillis());
+            delta += (currentTime - lastTime) / drawInterval;
 
-            if (sleepTime >= 0) {
-                try {
-                    Thread.sleep(sleepTime);
-                } catch (InterruptedException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                // Shit, we are running behind
+            lastTime = currentTime;
+
+            if (delta >= 1) {
+                update();
+                repaint();
+                delta--;
             }
-            if (player != null) {
-                if (player.getX() != playerPreviousXValue || player.getY() != playerPreviousYValue) {
-                    System.out.println("Moved");
-                }
-
-                playerPreviousXValue = player.getX();
-                playerPreviousYValue = player.getY();
-            }
-
-
         }
     }
 
     public void update() {
-
+        if (keyH.downPressed) {
+            playerY += 4;
+        } else if (keyH.upPressed) {
+            playerY -= 4;
+        } else if (keyH.rightPressed) {
+            playerX += 4;
+        } else if (keyH.leftPressed) {
+            playerX -= 4;
+        }
     }
 
-    public void paintContent() {
+    @Override
+    public void paintComponent(Graphics g) {
+        super.paintComponent(g);
 
+        Graphics2D g2 = (Graphics2D)g;
+
+        g2.setColor(Color.WHITE);
+        g2.fillRect(playerX, playerY, tileSize, tileSize);
     }
 }
