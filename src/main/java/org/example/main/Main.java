@@ -13,17 +13,12 @@ public class Main {
         window.setTitle("2Daja");
 
         GamePanel gamePanel = new GamePanel();
-        gamePanel.setFocusable(true);
 
         gamePanel.startGameThread();
 
         Player player = new Player();
 
         gamePanel.setPlayer(player);
-
-        HandlerEvent handlerEvent = new HandlerEvent(player);
-
-        gamePanel.addKeyListener(handlerEvent);
 
         window.add(gamePanel);
 

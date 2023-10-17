@@ -5,12 +5,8 @@ import org.example.main.characters.Player;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
-public class HandlerEvent implements KeyListener {
-    Player player;
-
-    public HandlerEvent(Player player) {
-        this.player = player;
-    }
+public class KeyHandler implements KeyListener {
+    public boolean upPressed, downPressed, leftPressed, rightPressed;
 
     @Override
     public void keyTyped(KeyEvent keyEvent) {
@@ -22,15 +18,22 @@ public class HandlerEvent implements KeyListener {
         int keyCode = keyEvent.getKeyCode();
 
         switch (keyCode) {
-            case KeyEvent.VK_LEFT -> player.moveToLeft();
-            case KeyEvent.VK_RIGHT -> player.moveToRight();
-            case KeyEvent.VK_UP -> player.moveUp();
-            case KeyEvent.VK_DOWN -> player.moveDown();
+            case KeyEvent.VK_LEFT -> leftPressed = true;
+            case KeyEvent.VK_RIGHT -> rightPressed = true;
+            case KeyEvent.VK_UP -> upPressed = true;
+            case KeyEvent.VK_DOWN -> downPressed = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent keyEvent) {
+        int keyCode = keyEvent.getKeyCode();
 
+        switch (keyCode) {
+            case KeyEvent.VK_LEFT -> leftPressed = false;
+            case KeyEvent.VK_RIGHT -> rightPressed = false;
+            case KeyEvent.VK_UP -> upPressed = false;
+            case KeyEvent.VK_DOWN -> downPressed = false;
+        }
     }
 }
