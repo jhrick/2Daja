@@ -26,9 +26,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     Player player;
 
-    public int playerX = 100;
-    public int playerY = 100;
-
     public GamePanel() {
 
         this.setPreferredSize(new Dimension(screenWidth, screenHeight));
@@ -50,7 +47,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     @Override
     public void run() {
-        double drawInterval = (double) 1000000000 /FPS;
+        double drawInterval = (double) 1000000000 /FPS; // 0.016666 seconds
         double delta = 0;
         long lastTime = System.nanoTime();
         long currentTime;
@@ -83,13 +80,13 @@ public class GamePanel extends JPanel implements Runnable {
 
     public void update() {
         if (keyH.downPressed) {
-            playerY += 4;
+            player.moveDown();
         } else if (keyH.upPressed) {
-            playerY -= 4;
+            player.moveUp();
         } else if (keyH.rightPressed) {
-            playerX += 4;
+            player.moveToRight();
         } else if (keyH.leftPressed) {
-            playerX -= 4;
+            player.moveToLeft();
         }
     }
 
@@ -99,7 +96,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
-        g2.setColor(Color.WHITE);
-        g2.fillRect(playerX, playerY, tileSize, tileSize);
+        player.renderPlayer(g2);
     }
 }

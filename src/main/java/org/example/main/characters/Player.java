@@ -67,9 +67,9 @@ public class Player {
         return y;
     }
 
-    public void renderPlayer(Graphics g) {
+    public void renderPlayer(Graphics2D g2) {
         if (playerSprite != null) {
-            g.drawImage(playerSprite, getX(), getY(), null);
+            g2.drawImage(playerSprite, getX(), getY(), null);
         }
     }
 }
