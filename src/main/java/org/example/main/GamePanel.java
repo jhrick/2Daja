@@ -11,7 +11,7 @@ public class GamePanel extends JPanel implements Runnable {
     final int originalTileSize = 16; // 16x16 tile
     final int scale = 3;
 
-    final int tileSize = originalTileSize * scale; // 48x48 tile
+    public final int tileSize = originalTileSize * scale; // 48x48 tile
     final int maxScreenCol = 16;
     final int maxScreenRows = 12;
     final int screenWidth = maxScreenCol * tileSize; // 768px
@@ -33,10 +33,8 @@ public class GamePanel extends JPanel implements Runnable {
         this.setDoubleBuffered(true);
         this.addKeyListener(keyH);
         this.setFocusable(true);
-    }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+        player = new Player(this, keyH);
     }
 
     public void startGameThread() {
@@ -79,15 +77,7 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public void update() {
-        if (keyH.downPressed) {
-            player.moveDown();
-        } else if (keyH.upPressed) {
-            player.moveUp();
-        } else if (keyH.rightPressed) {
-            player.moveToRight();
-        } else if (keyH.leftPressed) {
-            player.moveToLeft();
-        }
+        player.update();
     }
 
     @Override
@@ -96,6 +86,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2 = (Graphics2D)g;
 
-        player.renderPlayer(g2);
+        player.draw(g2);
+
+        g2.dispose();
     }
 }

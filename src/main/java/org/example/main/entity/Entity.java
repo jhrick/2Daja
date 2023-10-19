@@ -6,4 +6,7 @@ public class Entity {
     protected int x, y, speed;
     protected BufferedImage up1, up2, down1, down2, left1, left2, right1, right2;
     protected String direction;
+
+    protected int spriteCount = 0;
+    protected int spriteNum = 1;
 }

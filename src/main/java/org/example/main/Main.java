@@ -1,7 +1,5 @@
 package org.example.main;
 
-import org.example.main.entity.Player;
-
 import javax.swing.*;
 
 public class Main {
@@ -15,10 +13,6 @@ public class Main {
         GamePanel gamePanel = new GamePanel();
 
         gamePanel.startGameThread();
-
-        Player player = new Player();
-
-        gamePanel.setPlayer(player);
 
         window.add(gamePanel);
 
